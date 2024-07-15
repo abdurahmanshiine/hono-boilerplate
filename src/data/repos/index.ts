@@ -1,0 +1,6 @@
+export { default as UsersRepo } from "./users"
+export { default as ParcelsRepo } from "./parcels"
+export { default as CustomersRepo } from "./customers"
+export { default as BusesRepo } from "./buses"
+export { default as SitesRepo } from "./sites"
+export { default as ShipmentsRepo } from "./shipments"
