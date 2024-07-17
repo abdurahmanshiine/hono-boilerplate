@@ -2,19 +2,16 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { secureHeaders } from "hono/secure-headers";
-// import {
-//   errorHandler,
-//   NotFoundError,
-// } from "@ticketing-app-for-abdurahman/shared";
+// import { bodyLimit } from 'hono/body-limit'
 // import { compress } from 'hono/compress'
 import { compress } from 'bun-compression'
-// import { bodyLimit } from 'hono/body-limit'
 
 import configs from "../config";
 import { classRoutes } from "./routes";
-import { Auth } from "./middleware";
+import { Auth, InternalServerError, NotFoundError } from "./middleware";
 import { showRoutes } from "hono/dev";
 import { customLogger } from "../utils";
+import { HTTPException } from "hono/http-exception";
 
 class Api {
   public app: Hono;
@@ -33,7 +30,7 @@ class Api {
     this.addRoutes();
     this.addDefaultRoute();
     this.addNotFoundRoute();
-    // this.addErrorHandler();
+    this.addErrorHandler();
   }
 
   private applyStandardMiddleware(): void {
@@ -86,15 +83,23 @@ class Api {
   private addNotFoundRoute(): void {
     this.app.notFound(async (c) => {
       console.log("Route not found:", c.req.url);
-      return c.json({
-        message: "Route not found",
-      }, 404)
+      throw new NotFoundError();
     });
   }
 
-  // private addErrorHandler(): void {
-  //  this.app.onError((err, c)) => {}
-  // }
+  private addErrorHandler(): void {
+    this.app.onError(async (err, c): Promise<Response> => {
+      if (err instanceof HTTPException) {
+        console.log(err.getResponse())
+        return err.getResponse()
+        // return c.json({ message: "janno" })
+      } else {
+        return c.json({
+          message: "Internal Server Error",
+        }, 200)
+      }
+    })
+  }
 }
 
 export default new Api();

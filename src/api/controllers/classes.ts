@@ -1,3 +1,4 @@
+import responseHandler from "../../utils/response-handler"
 import { BaseController } from "./base"
 
 class ClassControllers extends BaseController {
@@ -6,9 +7,9 @@ class ClassControllers extends BaseController {
   }
 
   public getAll = () => this.init(async (c) => {
-    return c.json({
+    return responseHandler(c, {
       message: "success",
-    }, 200)
+    })
   })[0]
 }
 

@@ -1,6 +1,0 @@
-[{"_id":{"$oid":"66606096fc13ae79a6b09f79"},"businessId":{"$oid":"66606096fc13ae79a6b09f7a"},"city":"hargeisa"},
-{"_id":{"$oid":"66606096fc13ae79a6b09f7b"},"businessId":{"$oid":"66606096fc13ae79a6b09f7c"},"city":"borama"},
-{"_id":{"$oid":"66606096fc13ae79a6b09f7d"},"businessId":{"$oid":"66606096fc13ae79a6b09f7e"},"city":"burao"},
-{"_id":{"$oid":"66606096fc13ae79a6b09f7f"},"businessId":{"$oid":"66606096fc13ae79a6b09f80"},"city":"barbera"},
-{"_id":{"$oid":"66606096fc13ae79a6b09f81"},"businessId":{"$oid":"66606096fc13ae79a6b09f82"},"city":"wajaale"},
-{"_id":{"$oid":"66606096fc13ae79a6b09f83"},"businessId":{"$oid":"66606096fc13ae79a6b09f84"},"city":"gabiley"}]
