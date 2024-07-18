@@ -8,10 +8,10 @@ import { compress } from 'bun-compression'
 
 import configs from "../config";
 import { classRoutes } from "./routes";
-import { Auth, InternalServerError, NotFoundError } from "./middleware";
+import { Auth, NotFoundError } from "./middleware";
 import { showRoutes } from "hono/dev";
 import { customLogger } from "../utils";
-import { HTTPException } from "hono/http-exception";
+import { BaseError } from "./middleware/base-error";
 
 class Api {
   public app: Hono;
@@ -88,16 +88,12 @@ class Api {
   }
 
   private addErrorHandler(): void {
+    // TODO: Follow up on the status code issue
     this.app.onError(async (err, c): Promise<Response> => {
-      if (err instanceof HTTPException) {
-        console.log(err.getResponse())
-        return err.getResponse()
-        // return c.json({ message: "janno" })
-      } else {
-        return c.json({
-          message: "Internal Server Error",
-        }, 200)
-      }
+      if (err instanceof BaseError) return c.json({ message: err.message }, err.statusCode)
+      else return c.json({
+        message: "Internal Server Error",
+      }, 500)
     })
   }
 }

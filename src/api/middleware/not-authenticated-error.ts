@@ -1,7 +1,14 @@
-import { HTTPException } from "hono/http-exception";
+import { BaseError } from "./base-error";
 
-export default class UnAuthenticatedError extends HTTPException {
+export default class UnAuthenticatedError extends BaseError {
+  statusCode: number = 401;
+
   constructor() {
-    super(401, { message: "You are not authenticated" });
+    super("You are not authenticated");
+    Object.setPrototypeOf(this, UnAuthenticatedError.prototype);
+  }
+
+  serializeErrors() {
+    return { statusCode: this.statusCode, message: "You are not authenticated" };
   }
 }

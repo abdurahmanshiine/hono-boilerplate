@@ -1,7 +1,14 @@
-import { HTTPException } from "hono/http-exception";
+import { BaseError } from "./base-error";
 
-export default class UnAuthorizedError extends HTTPException {
+export default class UnAuthorizedError extends BaseError {
+  statusCode: number = 403;
+
   constructor() {
-    super(403, { message: "You are not authorized" });
+    super("You are not authorized");
+    Object.setPrototypeOf(this, UnAuthorizedError.prototype);
+  }
+
+  serializeErrors() {
+    return { statusCode: this.statusCode, message: "You are not authorized" };
   }
 }

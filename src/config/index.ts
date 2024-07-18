@@ -14,7 +14,7 @@ const configs: IConfigs = {
     .value as string,
   port: Joi.number().validate(Bun.env.PORT ?? 5000).value as number,
   domain: Joi.string().domain().validate(Bun.env.DOMAIN ?? "http://localhost:5000").value as string,
-  apiRoot: Joi.string().validate(Bun.env.API_ROOT ?? "/api/v0")
+  apiRoot: Joi.string().validate(Bun.env.API_ROOT ?? "/api/v0/sms")
     .value as Commons.ApiRoot,
   timezone: Joi.string().validate(Bun.env.TZ ?? "Africa/Mogadishu")
     .value as string,
